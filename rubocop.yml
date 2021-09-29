@@ -378,6 +378,7 @@ Naming/VariableName:
   Enabled: true
 
 Naming/VariableNumber:
+  Enabled: true
 
 Security/Eval:
   Enabled: true
