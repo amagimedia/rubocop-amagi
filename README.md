@@ -8,10 +8,15 @@ Amagi rubocop rules
   1. add rubocop and rubocop-amagi in your Gemfile:
   ~~~ruby
     gem "rubocop"
-    gem "rubocop-amagi", git=> 'git@github.com:amagimedia/rubocop-amagi.git'
+    gem "rubocop-amagi"
   ~~~
   
-  2. add the below configuration in Rubocop config file(.rubocop.yml):
+  2. install gems
+   ~~~ruby
+    bundle install
+   ~~~
+  
+  3. add the below configuration in Rubocop config file(.rubocop.yml):
   ~~~ruby
     inherit_gem:
       rubocop-amagi: rubocop.yml
