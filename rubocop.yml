@@ -721,7 +721,7 @@ Style/WhileUntilModifier:
   Enabled: true
 
 Style/WordArray:
-  Enabled: true
+  Enabled: false
 
 Style/YodaCondition:
   Enabled: true
