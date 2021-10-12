@@ -7,6 +7,9 @@ AllCops:
     - 'vendor/**/*'
     - 'node_modules/**/*'
 
+require:
+  - 'rubocop-rails'
+
 Bundler/DuplicatedGem:
   Enabled: true
 
@@ -381,6 +384,40 @@ Naming/VariableName:
 
 Naming/VariableNumber:
   Enabled: false
+
+Rails/ActiveRecordOverride:
+  Enabled: true
+
+Rails/AfterCommitOverride:
+  Enabled: true
+
+Rails/Blank:
+  Enabled: true
+
+Rails/Date:
+  Enabled: true
+
+Rails/EnvironmentComparison:
+  Enabled: true
+
+Rails/Exit:
+  Enabled: true
+
+Rails/FilePath:
+  Enabled: true
+  EnforcedStyle: arguments
+
+Rails/FindEach:
+  Enabled: true
+
+Rails/Output:
+  Enabled: true
+
+Rails/Present:
+  Enabled: true
+
+Rails/SaveBang:
+  Enabled: true
 
 Security/Eval:
   Enabled: false
