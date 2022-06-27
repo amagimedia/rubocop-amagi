@@ -11,9 +11,8 @@ require:
   - './lib/cops/logger_format_cop.rb'
   - 'rubocop-rails'
   
-
 CustomCops/PutLoggerFormatCop:
-  Enabled: false
+  Enabled: true
 
 Bundler/DuplicatedGem:
   Enabled: true
