@@ -12,8 +12,8 @@ require:
   - 'rubocop-rails'
   
 
-CustomCops/LoggerFormatCop:
-  Enabled: true
+CustomCops/PutLoggerFormatCop:
+  Enabled: false
 
 Bundler/DuplicatedGem:
   Enabled: true

@@ -1,8 +1,7 @@
-require 'byebug'
 module RuboCop
   module Cop
     module CustomCops
-      class LoggerFormatCop < Cop
+      class PutLoggerFormatCop < Cop
         # Constant required for Rubocop
         MSG = 'Log Format should be <module/class>#method_name:<space><message>'.freeze
         def get_classname(node)
