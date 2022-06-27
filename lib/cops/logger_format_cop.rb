@@ -43,25 +43,13 @@ module RuboCop
         end
 
         def on_send(node)
-          # check for info, warn, error and debug
-        #   if node.children[1] == :info || node.children[1] == :warn || node.children[1] == :error || node.children[1] == :debug
-            # check for Rails.logger or logger
-
-            if node.children[1] == :puts 
-              # get the logger message to compare
-              
-              str = get_string(node.children[2])
-              # puts str
-              
-              if str != "#{@class_name}##{@method_name}:"
-                puts @class_name
-                puts @method_name
-                puts "-------------------------------------------------------------"
-                # add offense if format not correct
-                add_offense(node, location: :expression)
-              end
+          if node.children[1] == :puts 
+            str = get_string(node.children[2])
+            if str != "#{@class_name}##{@method_name}:"
+            # add offense if format not correct
+              add_offense(node, location: :expression)
             end
-        #   end
+          end
         end
 
         def get_string(node)
