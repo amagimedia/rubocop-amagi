@@ -8,7 +8,12 @@ AllCops:
     - 'node_modules/**/*'
 
 require:
+  - './lib/cops/logger_format_cop.rb'
   - 'rubocop-rails'
+  
+
+CustomCops/LoggerFormatCop:
+  Enabled: true
 
 Bundler/DuplicatedGem:
   Enabled: true

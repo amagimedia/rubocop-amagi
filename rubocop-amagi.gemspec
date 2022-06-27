@@ -10,6 +10,5 @@ Gem::Specification.new do |s|
   s.authors     = ['Cloudport Team']
   s.email       = 'cloudport.team@amagi.com'
 
-  s.files       = ["rubocop.yml"]
+  s.files       = ['rubocop.yml']
 end
-
