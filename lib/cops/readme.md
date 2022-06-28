@@ -3,6 +3,7 @@
 ## How to use CustomCops?
 ***
 **Using any cop**
+---
 Open .rubocop.yml in your working directory and set the enabled option as true.
 
 CustomCop/Copname:
