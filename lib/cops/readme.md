@@ -5,9 +5,12 @@
 **Using any cop**
 ---
 Open .rubocop.yml in your working directory and set the enabled option as true.
-
-CustomCop/Copname:
-<indentation>  Enabled: true
-
+~~~ruby
+CustomCop/Copname: 
+  Enabled: true
+~~~
 ### About PutLoggerFormatCop
-PutLoggerFormatCop ensures that the message format received on encountering **puts** is of the standard format "<module/class>#method_name:<space><message>". 
+PutLoggerFormatCop ensures that the message format received on encountering **puts** is of the standard format 
+~~~ruby
+"<module/class>#method_name:<space><message>". 
+~~~
