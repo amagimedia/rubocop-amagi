@@ -10,5 +10,4 @@ CustomCop/Copname:
 <indentation>  Enabled: true
 
 ### About PutLoggerFormatCop
-PutLoggerFormatCop ensures that the message format received on encountering **puts** is of the standard format 
-"<module/class>#method_name:<space><message>". 
+PutLoggerFormatCop ensures that the message format received on encountering **puts** is of the standard format "<module/class>#method_name:<space><message>". 
