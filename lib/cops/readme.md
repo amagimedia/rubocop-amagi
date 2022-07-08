@@ -14,3 +14,8 @@ PutLoggerFormatCop ensures that the message format received on encountering **pu
 ~~~ruby
 "<module/class>#method_name:<space><message>". 
 ~~~
+Enabling the cop inside .rubocop.yml :
+~~~ruby
+CustomCop/PutLoggerFormatCop:
+  Enabled: true
+~~~
