@@ -45,7 +45,7 @@ DuplicateConstantCop ensures that there is no two constants in a file which has 
 ~~~ruby
  # allowed
  TEST = ["abc", "def"]
- TEST1 = "abc", "def"]
+ TEST1 = ["abc", "def"]
 ~~~
 
 Enabled by default
