@@ -19,3 +19,39 @@ Enabling the cop inside .rubocop.yml :
 CustomCop/PutLoggerFormatCop:
   Enabled: true
 ~~~
+
+### About DuplicateConstantCop
+DuplicateConstantCop ensures that there is no two constants in a file which has same string value
+
+
+~~~ruby
+ # not allowed
+ TEST = "abc"
+ TEST1 = "abc"
+~~~
+
+~~~ruby
+ # allowed
+ TEST = "abc"
+ TEST1 = "abcd"
+~~~
+
+~~~ruby
+ # allowed
+ TEST = 10
+ TEST1 = 10
+~~~
+
+~~~ruby
+ # allowed
+ TEST = ["abc", "def"]
+ TEST1 = "abc", "def"]
+~~~
+
+Enabled by default
+
+to disable it add the following lines in .rubocop.yml of your repo:
+~~~ruby
+CustomCop/DuplicateConstantCop:
+  Enabled: false
+~~~

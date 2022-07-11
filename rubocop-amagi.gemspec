@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'rubocop-amagi'
-  s.version     = '0.0.3'
+  s.version     = '1.0.0'
   s.platform    = Gem::Platform::RUBY
 
   s.summary     = 'amagi rubocop rules'
