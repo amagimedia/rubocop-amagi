@@ -1,8 +1,8 @@
 require "rubygems"
 
-spec = Gem::Specification::load("rubocop-amagi.gemspec")
-puts spec.version
+version = Gem::Specification::load("rubocop-amagi.gemspec").version
+puts version
 
-abort("Git Tag and SidekiqDupGuard version doesn't match") if (ENV["CIRCLE_TAG"].sub(/^v/, "") != version)
+abort("Git Tag and rubocop-amagi gem version doesn't match") if (ENV["CIRCLE_TAG"].sub(/^v/, "") != version)
 
 exit(0)
