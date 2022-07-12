@@ -23,6 +23,8 @@ CustomCop/PutLoggerFormatCop:
 ### DuplicateConstantCop
 DuplicateConstantCop ensures that there is no two constants in a file which has same string value
 
+#### Reason to add this cop
+if we have a same value for two constants and we try to fetch constant name using its value which ends in picking up the same constant always ignoring the other one. 
 
 ~~~ruby
  # not allowed
