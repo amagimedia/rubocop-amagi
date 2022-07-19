@@ -44,9 +44,20 @@ module RuboCop
         def on_send(node)
           if node.children[1] == :puts 
             str = get_string(node.children[2])
-            if str != "#{@class_name}##{@method_name}:"
-            # add offense if format not correct
-              add_offense(node, location: :expression)
+            # If class name and method name are not nil
+            if(@class_name!=nil)
+                if str != "#{@class_name}##{@method_name}:"
+                  # add offense if format not correct
+                  add_offense(node, location: :expression)
+                  end
+              else
+                # If class name is nil
+                if(@method_name!=nil)
+                  if str != "#{@method_name}:"
+                    # add offense if format not correct
+                    add_offense(node, message:"Log Format should be method_name:<space><message>" )
+                  end
+                end
             end
           end
         end
