@@ -1,7 +1,8 @@
 module RuboCop
   module Cop
     module CustomCops
-      class PutLoggerFormatCop < Cop
+      class PutLoggerFormatCop < Base
+        extend AutoCorrector
         # Constant required for Rubocop
         MSG = 'Log Format should be <module/class>#method_name:<space><message>'.freeze
         def get_classname(node)
@@ -45,17 +46,24 @@ module RuboCop
           if node.children[1] == :puts 
             str = get_string(node.children[2])
             # If class name and method name are not nil
-            if(@class_name!=nil)
+            if !@class_name.nil?
                 if str != "#{@class_name}##{@method_name}:"
                   # add offense if format not correct
-                  add_offense(node, location: :expression)
+                  add_offense(node) do |corrector|
+                    # Inserting the "class/module_name#method_name: " at the correct position.
+                    corrector.insert_before(node.children[2].children[0] , "#{@class_name}##{@method_name}: ")
+                  end
+                  
                   end
               else
                 # If class name is nil
-                if(@method_name!=nil)
+                if !@method_name.nil?
                   if str != "#{@method_name}:"
                     # add offense if format not correct
-                    add_offense(node, message:"Log Format should be method_name:<space><message>" )
+                    add_offense(node, message:"Log Format should be method_name:<space><message>" ) do |corrector|
+                      # Inserting the "class/module_name#method_name: " at the correct position.
+                      corrector.insert_before(node.children[2].children[0] , "#{@method_name}: ")
+                    end
                   end
                 end
             end
