@@ -61,7 +61,7 @@ module RuboCop
                   if str != "#{@method_name}:"
                     # add offense if format not correct
                     add_offense(node, message:"Log Format should be method_name:<space><message>" ) do |corrector|
-                      # Inserting the "class/module_name#method_name: " at the correct position.
+                      # Inserting the "method_name: " at the correct position.
                       corrector.insert_before(node.children[2].children[0] , "#{@method_name}: ")
                     end
                   end
