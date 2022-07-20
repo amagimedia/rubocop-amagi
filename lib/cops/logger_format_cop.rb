@@ -4,6 +4,15 @@ module RuboCop
       class PutLoggerFormatCop < Base
         extend AutoCorrector
         # Constant required for Rubocop
+        # This is used to match the puts content with the correct fornat.
+        # 
+        # Examples:
+        # Good -> puts("Transcode#set_profile_name: Setting up the profile."), Here Transcode is the module/class name and set_profile_name is the method name.
+        # Good -> puts("Base#get_media_info: Retrieving media information."), Here Base is the module/class name and get_media_info is the method name.
+        #
+        # Bad -> puts("Setting up the profile"), No module/class name and method name is provided.
+        # Bad-> puts ("set_profile_name: Setting up the profile."), Here no module/class name is provided.
+        #
         MSG = 'Log Format should be <module/class>#method_name:<space><message>'.freeze
         def get_classname(node)
             # for getting complete names of controllers
@@ -53,8 +62,7 @@ module RuboCop
                     # Inserting the "class/module_name#method_name: " at the correct position.
                     corrector.insert_before(node.children[2].children[0] , "#{@class_name}##{@method_name}: ")
                   end
-                  
-                  end
+                end
               else
                 # If class name is nil
                 if !@method_name.nil?
