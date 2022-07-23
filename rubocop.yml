@@ -10,7 +10,6 @@ AllCops:
 require:
   - './lib/cops/logger_format_cop.rb'
   - 'rubocop-rails'
-  - 'rubocop-rspec'
   
 CustomCops/PutLoggerFormatCop:
   Enabled: false

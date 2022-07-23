@@ -54,26 +54,30 @@ module RuboCop
         def on_send(node)
           if node.children[1] == :puts 
             str = get_string(node.children[2])
-            # If class name and method name are not nil
             if !@class_name.nil? 
+              # Matching the required format
               if str != "#{@class_name}##{@method_name}:"
-                  # add offense if format not correct
                   add_offense(node) do |corrector|
-                    # Inserting the "class/module_name#method_name: " at the correct position.
-                    if node.children[2].children[0].class == String # Checking the class of the node.children[2].children[0]
+                    # If the class is StrNode then insert before the message.
+                    if node.children[2].children[0].class == RuboCop::AST::StrNode
                       corrector.insert_before(node.children[2].children[0] , "#{@class_name}##{@method_name}: ")
+                    # If the class is String then replace the entire string.
+                    elsif node.children[2].children[0].class == String
+                      corrector.replace(node.children[2], "\"#{@class_name}##{@method_name}: #{node.children[2].children[0]}\"")
                     end
                   end
                 end
               else
-                # If class name is nil
                 if !@method_name.nil?
+                  # Matching the required format
                   if str != "#{@method_name}:"
-                    # add offense if format not correct
                     add_offense(node, message:"Log Format should be method_name:<space><message>" ) do |corrector|
-                      # Inserting the "method_name: " at the correct position.
-                      if node.children[2].children[0].class == String # Checking the class of the node.children[2].children[0]
+                      # If the class is StrNode then insert before the message.
+                      if node.children[2].children[0].class == RuboCop::AST::StrNode
                         corrector.insert_before(node.children[2].children[0] , "#{@method_name}: ")
+                      # If the class is String then replace the entire string.
+                      elsif node.children[2].children[0].class == String
+                        corrector.replace(node.children[2], "\"#{@method_name}: #{node.children[2].children[0]}\"")
                       end
                     end
                   end
