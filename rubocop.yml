@@ -14,7 +14,7 @@ require:
   - 'rubocop-rails'
 
 CustomCops/RaiseMessageCop:
-  Enabled: false
+  Enabled: true
 
 CustomCops/PutLoggerFormatCop:
   Enabled: false
