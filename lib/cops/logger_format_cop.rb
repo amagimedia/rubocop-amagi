@@ -1,8 +1,18 @@
 module RuboCop
   module Cop
     module CustomCops
-      class PutLoggerFormatCop < Cop
+      class PutLoggerFormatCop < Base
+        extend AutoCorrector
         # Constant required for Rubocop
+        # This is used to match the puts content with the correct fornat.
+        # 
+        # Examples:
+        # Good -> puts("Transcode#set_profile_name: Setting up the profile."), Here Transcode is the module/class name and set_profile_name is the method name.
+        # Good -> puts("Base#get_media_info: Retrieving media information."), Here Base is the module/class name and get_media_info is the method name.
+        #
+        # Bad -> puts("Setting up the profile"), No module/class name and method name is provided.
+        # Bad-> puts ("set_profile_name: Setting up the profile."), Here no module/class name is provided.
+        #
         MSG = 'Log Format should be <module/class>#method_name:<space><message>'.freeze
         def get_classname(node)
             # for getting complete names of controllers
@@ -44,9 +54,34 @@ module RuboCop
         def on_send(node)
           if node.children[1] == :puts 
             str = get_string(node.children[2])
-            if str != "#{@class_name}##{@method_name}:"
-            # add offense if format not correct
-              add_offense(node, location: :expression)
+            if !@class_name.nil? 
+              # Matching the required format
+              if str != "#{@class_name}##{@method_name}:"
+                  add_offense(node) do |corrector|
+                    # If the class is StrNode then insert before the message.
+                    if node.children[2].children[0].class == RuboCop::AST::StrNode
+                      corrector.insert_before(node.children[2].children[0] , "#{@class_name}##{@method_name}: ")
+                    # If the class is String then replace the entire string.
+                    elsif node.children[2].children[0].class == String
+                      corrector.replace(node.children[2], "\"#{@class_name}##{@method_name}: #{node.children[2].children[0]}\"")
+                    end
+                  end
+                end
+              else
+                if !@method_name.nil?
+                  # Matching the required format
+                  if str != "#{@method_name}:"
+                    add_offense(node, message:"Log Format should be method_name:<space><message>" ) do |corrector|
+                      # If the class is StrNode then insert before the message.
+                      if node.children[2].children[0].class == RuboCop::AST::StrNode
+                        corrector.insert_before(node.children[2].children[0] , "#{@method_name}: ")
+                      # If the class is String then replace the entire string.
+                      elsif node.children[2].children[0].class == String
+                        corrector.replace(node.children[2], "\"#{@method_name}: #{node.children[2].children[0]}\"")
+                      end
+                    end
+                  end
+                end
             end
           end
         end

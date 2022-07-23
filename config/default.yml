@@ -1,0 +1,11 @@
+AllCops:
+  TargetRubyVersion: 2.7.1
+  Exclude:
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+
+require:
+  - './lib/cops/logger_format_cop.rb'
+
+CustomCops/PutLoggerFormatCop:
+  Enabled: true
