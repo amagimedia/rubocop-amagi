@@ -11,7 +11,7 @@ module RuboCop
             # If the raise encountered does not have any arguments, add the offense
             # It ensures that raise is always accompanied with an argument.
             if node.arguments.size<1
-              add_offense(node, message: "Raise should be accompanied with a message.")
+              add_offense(node, message: "Raise should be accompanied by a message/argument.")
             end
           end
         end
