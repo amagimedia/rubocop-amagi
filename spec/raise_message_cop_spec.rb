@@ -3,7 +3,7 @@ require_relative '../lib/cops/raise_message_cop.rb'
 RSpec.describe RuboCop::Cop::CustomCops::RaiseMessageCop do
     context 'corrector' do
         subject(:cop) { described_class.new }
-        it 'it should correct the node with node.children[2].children[0].class == RuboCop::AST::StrNode' do
+        it 'it should register an offense if there is an empty raise present' do
             expect_offense(<<~RUBY)
               module D
                 class A
@@ -14,6 +14,29 @@ RSpec.describe RuboCop::Cop::CustomCops::RaiseMessageCop do
                 end
               end
             RUBY
+        end
+        it 'it should not register an offense if raise is accompanied by an argument/message' do
+          expect_no_offenses (<<~RUBY)
+          module D
+            class A
+                def B
+                  raise "A message with context to the raised error."
+                end
+            end
+          end
+
+          RUBY
+
+          expect_no_offenses (<<~RUBY)
+          module D
+            class A
+                def B
+                  raise StandardError, 'message'
+                end
+            end
+          end
+
+          RUBY
         end
     end
 end

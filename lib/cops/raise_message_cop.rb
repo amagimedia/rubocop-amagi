@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-#This cop checks if there is any "raise" code without a message
-
+# This cop checks if there is any "raise" code without a message
+# Examples:
+# Good -> raise "Message"
+# Good -> 
 module RuboCop
     module Cop
       module CustomCops
