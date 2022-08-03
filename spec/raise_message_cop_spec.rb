@@ -38,5 +38,29 @@ RSpec.describe RuboCop::Cop::CustomCops::RaiseMessageCop do
 
           RUBY
         end
+        it 'it should register an offense for an inline condtion' do
+          expect_offense(<<~RUBY)
+          module D
+            class A
+                def B
+                  raise unless status
+                  ^^^^^ Raise should be accompanied by a message/argument.
+                end
+            end
+          end
+
+          RUBY
+
+          expect_no_offenses (<<~RUBY)
+          module D
+            class A
+                def B
+                  raise StandardError, 'message' unless status
+                end
+            end
+          end
+
+          RUBY
+        end
     end
 end
