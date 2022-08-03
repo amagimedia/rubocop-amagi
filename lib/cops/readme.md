@@ -79,20 +79,30 @@ CustomCop/DuplicateConstantCop:
 RaiseMessageCop ensures that there is no empty occurence of raise, i.e it makes sure that "raise" is always accompanied by an argument/message.
 
 ### Reason to add this cop
-if we have an occurence of raise without a message or an argument it breaks the flow of the code and the rest of the code becomes unreachable, hence raising "unreachable code" offense on rubocop.
+if we have an occurence of raise without a message or an argument it breaks the flow of the code and the reason for the exception will be unkown.
 
 ~~~ ruby
 # not allowed, raise without a message or argument.
 raise
 ~~~
 
-~~~ ruby
+~~~ruby
+# not allowed, raise with an inline condition.
+raise unless status
+~~~
+
+~~~ruby
 # allowed
+raise StandardError,'message' unless status
+~~~
+
+~~~ ruby
+# allowed.
 raise "Error message
 ~~~
 
 ~~~ ruby
-# allowed
+# allowed.
 raise StandardError, 'message'
 ~~~
 
