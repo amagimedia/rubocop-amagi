@@ -13,12 +13,42 @@ module RuboCop
   module Cop
     module CustomCops
       class RaiseMessageCop < Base
-        def on_send(node)
-          return unless node.command?(:raise)
 
-          # If the raise encountered does not have any arguments, add the offense
-          # It ensures that raise is always accompanied with an argument.
-          add_offense(node, message: 'Raise should be accompanied by a message/argument.') if node.arguments.empty?
+        def_node_matcher :emptyraise?, <<~PATTERN
+        (send nil? :raise)
+        PATTERN
+        def on_new_investigation()
+          super
+          @nodes=[] #candidates
+          @rescnodes=[] #rescuenodes
+          @safenodes=[] #evaluated
+          @finalnodes=[]
+        end
+
+        def on_rescue(node)
+          @rescnodes << node
+        end
+
+        def on_send(node)
+          if emptyraise?(node)
+            @nodes << node
+          end
+        end
+
+        def on_investigation_end
+          @rescnodes.each do |rescnode|
+            @nodes.each do |node|
+              if rescnode.source_range.contains?(node.source_range)
+                @safenodes << node
+              end
+            end
+          end
+          @nodes.each do |n|
+            @finalnodes << n if (@safenodes.select{|s| s.object_id== n.object_id}).empty?
+          end
+          @finalnodes.each do |f|
+            add_offense(f,message:"Raise should be accompanied by a message/argument.")
+          end
         end
       end
     end
