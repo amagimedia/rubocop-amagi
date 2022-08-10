@@ -64,5 +64,21 @@ RSpec.describe RuboCop::Cop::CustomCops::RaiseMessageCop do
 
       RUBY
     end
+    it 'it should not register an offense if raise is wrapped by a rescue block' do
+      expect_no_offenses(<<~RUBY)
+        module D
+          class A
+              def B
+                begin
+                  this_will_fail!
+                rescue Failure => error
+                  log.error error.message
+                  raise
+                end
+              end
+          end
+        end
+      RUBY
+    end
   end
 end
