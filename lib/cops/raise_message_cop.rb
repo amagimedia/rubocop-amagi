@@ -19,7 +19,7 @@ module RuboCop
         PATTERN
         def on_new_investigation()
           super
-          @nodes=[] #candidates
+          @candidates=[] #candidates
           @rescnodes=[] #rescuenodes
           @safenodes=[] #evaluated
           @finalnodes=[]
@@ -31,19 +31,19 @@ module RuboCop
 
         def on_send(node)
           if emptyraise?(node)
-            @nodes << node
+            @candidates << node
           end
         end
 
         def on_investigation_end
           @rescnodes.each do |rescnode|
-            @nodes.each do |node|
+            @candidates.each do |node|
               if rescnode.source_range.contains?(node.source_range)
                 @safenodes << node
               end
             end
           end
-          @nodes.each do |n|
+          @candidates.each do |n|
             @finalnodes << n if (@safenodes.select{|s| s.object_id== n.object_id}).empty?
           end
           @finalnodes.each do |f|
