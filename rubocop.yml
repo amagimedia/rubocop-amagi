@@ -10,8 +10,12 @@ AllCops:
 require:
   - './lib/cops/logger_format_cop.rb'
   - './lib/cops/duplicate_constant_cop.rb'
+  - './lib/cops/raise_message_cop.rb'
   - 'rubocop-rails'
-  
+
+CustomCops/RaiseMessageCop:
+  Enabled: true
+
 CustomCops/PutLoggerFormatCop:
   Enabled: false
 

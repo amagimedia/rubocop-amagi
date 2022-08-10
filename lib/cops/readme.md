@@ -14,6 +14,23 @@ PutLoggerFormatCop ensures that the message format received on encountering **pu
 ~~~ruby
 "<module/class>#method_name:<space><message>". 
 ~~~
+
+~~~ ruby
+# not allowed.
+puts("Message here")
+~~~
+
+~~~ruby
+# allowed, if both class/module name and method name are available.
+puts("moduleS#method2: Message here")
+~~~
+
+~~~ruby
+# allowed, if only method_name is available.
+puts("methodS: Message here")
+~~~
+Disabled by default
+
 Enabling the cop inside .rubocop.yml :
 ~~~ruby
 CustomCop/PutLoggerFormatCop:
@@ -55,5 +72,44 @@ Enabled by default
 to disable it add the following lines in .rubocop.yml of your repo:
 ~~~ruby
 CustomCop/DuplicateConstantCop:
+  Enabled: false
+~~~
+
+### RaiseMessageCop
+RaiseMessageCop ensures that there is no empty occurence of raise, i.e it makes sure that "raise" is always accompanied by an argument/message.
+
+### Reason to add this cop
+if we have an occurence of raise without a message or an argument it breaks the flow of the code and the reason for the exception will be unkown.
+
+~~~ ruby
+# not allowed, raise without a message or argument.
+raise
+~~~
+
+~~~ruby
+# not allowed, raise with an inline condition.
+raise unless status
+~~~
+
+~~~ruby
+# allowed
+raise StandardError,'message' unless status
+~~~
+
+~~~ ruby
+# allowed.
+raise "Error message
+~~~
+
+~~~ ruby
+# allowed.
+raise StandardError, 'message'
+~~~
+
+Enabled by default
+
+to disable it add the following lines in .rubocop.yml of your repo:
+~~~ruby
+CustomCop/RaiseMessageCop:
   Enabled: false
 ~~~
